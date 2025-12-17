@@ -6,10 +6,12 @@ import com.jalfredev.tasktracker.domain.entities.TaskList;
 import com.jalfredev.tasktracker.domain.entities.TaskStatus;
 import com.jalfredev.tasktracker.mappers.TaskListMapper;
 import com.jalfredev.tasktracker.mappers.TaskMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class TaskListMapperImpl implements TaskListMapper {
   /* Will handle:
    * - conversion of the tasksCollection
