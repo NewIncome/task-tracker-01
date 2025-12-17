@@ -19,7 +19,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(path = "task-list")
+@RequestMapping(path = "/api/task-lists")
 public class TaskListController {
 
   private final TaskListService taskListService;
