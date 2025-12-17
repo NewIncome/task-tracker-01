@@ -1,7 +1,6 @@
 package com.jalfredev.tasktracker.domain.entities;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.GeneratorStrategy;
 
 import java.time.LocalDateTime;
 import java.util.List;
