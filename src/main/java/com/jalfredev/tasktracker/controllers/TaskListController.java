@@ -15,6 +15,8 @@ import com.jalfredev.tasktracker.services.TaskListService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -28,6 +30,11 @@ public class TaskListController {
   public TaskListController(TaskListService taskListService, TaskListMapper taskListMapper) {
     this.taskListService = taskListService;
     this.taskListMapper = taskListMapper;
+  }
+
+  @GetMapping("/{task_list_id}")
+  public Optional<TaskListDto> getTaskList(@PathVariable UUID taskListId) {
+    return taskListService.getTaskList(taskListId).map(taskListMapper::toDto);
   }
 
   @GetMapping
