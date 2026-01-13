@@ -70,6 +70,13 @@ public class TaskListServiceImpl implements TaskListService {
     return taskListRepository.save(existingTaskList);
   }
 
-  
+  @Override
+  public void deleteTaskList(UUID taskListId) {
+    // We don't check if the TaskList exists because
+    // SpringDataJPA's deleteById handles non-existent entitites
+    taskListRepository.deleteById(taskListId);
+    // Due to our cascade Configuration,
+    // deleting a TaskList will also delete all Tasks associated with it
+  }
 
 }
