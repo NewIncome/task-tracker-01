@@ -15,6 +15,7 @@ import com.jalfredev.tasktracker.services.TaskService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -49,6 +50,12 @@ public class TaskController {
     );
 
     return taskMapper.toDto(createdTaskEntity);
+  }
+
+  @GetMapping("/{task_id}")
+  public Optional<TaskDto> getTask(@PathVariable("task_list_id") UUID taskListId,
+                                   @PathVariable("task_id") UUID taskId) {
+    return taskService.findTask(taskListId, taskId).map(taskMapper::toDto);  // To instead of returning an Optional<TaskEntity> it's an Optional<TaskDto>
   }
 
 }
