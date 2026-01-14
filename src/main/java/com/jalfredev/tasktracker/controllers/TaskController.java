@@ -58,4 +58,14 @@ public class TaskController {
     return taskService.findTask(taskListId, taskId).map(taskMapper::toDto);  // To instead of returning an Optional<TaskEntity> it's an Optional<TaskDto>
   }
 
+  @PutMapping("/{task_id}")
+  public TaskDto updateTask(@PathVariable("task_list_id") UUID taskListId,
+                            @PathVariable("task_id") UUID taskId,
+                            @RequestBody TaskDto task) {
+    return taskMapper.toDto(taskService.updateTask(
+                                taskListId,
+                                taskId,
+                                taskMapper.fromDTO(task)));
+  }
+
 }
