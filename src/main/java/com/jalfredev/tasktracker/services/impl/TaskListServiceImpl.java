@@ -6,6 +6,7 @@ import com.jalfredev.tasktracker.repositories.TaskListRepository;
 import com.jalfredev.tasktracker.services.TaskListService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -52,6 +53,7 @@ public class TaskListServiceImpl implements TaskListService {
     return taskListRepository.findById(id);
   }
 
+  @Transactional
   @Override
   public TaskList updateTaskList(UUID taskListId, TaskList taskList) {
     if(taskList.getId() == null)
@@ -74,7 +76,7 @@ public class TaskListServiceImpl implements TaskListService {
   public void deleteTaskList(UUID taskListId) {
     // We don't check if the TaskList exists because
     // SpringDataJPA's deleteById handles non-existent entitites
-    taskListRepository.deleteById(taskListId);
+    taskListRepository.deleteById(taskListId);  //* Has @Transactional in the definition
     // Due to our cascade Configuration,
     // deleting a TaskList will also delete all Tasks associated with it
   }

@@ -8,6 +8,7 @@ import com.jalfredev.tasktracker.repositories.TaskListRepository;
 import com.jalfredev.tasktracker.repositories.TaskRepository;
 import com.jalfredev.tasktracker.services.TaskService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,6 +33,7 @@ public class TaskServiceImpl implements TaskService {
     return taskRepository.findByTaskListId(taskListId);  //custom query we created with help from JPA
   }
 
+  @Transactional
   @Override
   public Task createTask(UUID taskListId, Task task) {
     // Validations, make sure the task.id is null to create not update, and a required title
@@ -67,6 +69,7 @@ public class TaskServiceImpl implements TaskService {
     return taskRepository.findByTaskListIdAndId(taskListId, taskId);
   }
 
+  @Transactional
   @Override
   public Task updateTask(UUID taskListId, UUID taskId, Task task) {
     // VALIDATIONS
@@ -89,5 +92,20 @@ public class TaskServiceImpl implements TaskService {
 
     return taskRepository.save(existingTask);
   }
+
+  @Transactional
+  @Override
+  public void deleteTask(UUID taskListId, UUID taskId) {
+    taskRepository.deleteByTaskListIdAndId(taskListId, taskId);
+  }
+  /* @Transactional annotation, is necessary when there are multiple call to the DB(-between modifications-)
+      it ensures the 'delete' happens within A Database Transaction,
+      so if any part of that operation-transaction the operation is brought back,
+      to maintain DataBase consistency.
+      It's important when we delete data or when we attempt to make any changes(update)
+      //to have encapsulate many DB-calls as one transaction
+
+      If not used we get a:  jakarta.persistence. TransactionRequiredException
+   */
 
 }
