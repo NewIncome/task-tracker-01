@@ -40,4 +40,15 @@ public class TaskController {
                         .toList();
   }
 
+  @PostMapping
+  public TaskDto createTask(@PathVariable("task_list_id") UUID taskListId,
+                            @RequestBody TaskDto taskDto) {
+    Task createdTaskEntity = taskService.createTask(
+                                    taskListId,
+                                    taskMapper.fromDTO(taskDto)
+    );
+
+    return taskMapper.toDto(createdTaskEntity);
+  }
+
 }
